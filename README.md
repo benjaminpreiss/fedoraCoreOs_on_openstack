@@ -3,9 +3,8 @@ Running fedora core os on openstack with ansible.
 
 ## How to create the fedora core os ignition file
 ### Generate ssh keys:
-1. Generate ssh keys:
-    Important is that the private key is saved to the machine that should be enabled to administrate the cloud setup.
-    [Useful link](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html)
+1. Generate ssh keys using `ssh-keygen`. This [link](https://www.ssh.com/ssh/keygen/) will help. The public key will be needed at a later point in this tutorial!
+2. It might be wise to pass ssh key management to `ssh-agent`. This [link](https://www.ssh.com/ssh/agent) will help. It is important that you remember the passwort for the private key!
 ### Fedora core os configuration
 1. Create a fedora core os configuration file ending with `...fcc.yaml`. Minimal example:
     ```yaml
