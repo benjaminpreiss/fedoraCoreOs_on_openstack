@@ -86,33 +86,6 @@ We want to enable pings and ssh traffic in the security group (possibly default)
     openstack floating ip create <public-network-name>
     ```
 
-## Run fedora core os on openstack
-
-### How to create the openstack fedora core os instance
-
-1. Create fedora core os openstack server (taken from [link](https://remote-lab.net/fedora-coreos-openstack):
-
-    ```bash
-    openstack server create \
-        --flavor <flavor-name> \
-        --image <image-name> \
-        --nic net-id=<network-name> \
-        --user-data <path-to-ignition-file>.ign \
-        --config-drive True \
-        <desired-instance-name>
-    ```
-
-    - Choose `<flavor-name>` to respect the minimum resource requirements of our image!
-    - Supply our created internal network (not the subnet) as `<network-name>`.
-
-### How to bind a floating ip to the created instance
-
-1. Bind floating ip to the recently created instance:
-
-    ```bash
-    openstack server add floating ip <instance-name> <floating-ip>
-    ```
-
 ## How to create the fedora core os ignition file
 
 ### Generate ssh keys
@@ -150,6 +123,33 @@ The ignition file generation can be easily done using [fcct](https://docs.fedora
 
     ```powershell
     Get-Content <example-fcc-path>.yaml | docker run -i --rm quay.io/coreos/fcct --pretty --strict > <transpiled-config-path>.ign
+    ```
+
+## Run fedora core os on openstack
+
+### How to create the openstack fedora core os instance
+
+1. Create fedora core os openstack server (taken from [link](https://remote-lab.net/fedora-coreos-openstack):
+
+    ```bash
+    openstack server create \
+        --flavor <flavor-name> \
+        --image <image-name> \
+        --nic net-id=<network-name> \
+        --user-data <path-to-ignition-file>.ign \
+        --config-drive True \
+        <desired-instance-name>
+    ```
+
+    - Choose `<flavor-name>` to respect the minimum resource requirements of our image!
+    - Supply our created internal network (not the subnet) as `<network-name>`.
+
+### How to bind a floating ip to the created instance
+
+1. Bind floating ip to the recently created instance:
+
+    ```bash
+    openstack server add floating ip <instance-name> <floating-ip>
     ```
 
 ## Access fedora core os via ssh
