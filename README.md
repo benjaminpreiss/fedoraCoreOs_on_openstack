@@ -2,45 +2,6 @@
 
 Running fedora core os on openstack with ansible.
 
-## How to create the fedora core os ignition file
-
-### Generate ssh keys
-
-1. Generate ssh keys using `ssh-keygen`. This [link](https://www.ssh.com/ssh/keygen/) will help. The public key will be needed at a later point in this tutorial!
-2. It might be wise to pass ssh key management to `ssh-agent`. This [link](https://www.ssh.com/ssh/agent) will help. It is important that you remember the passwort for the private key!
-
-### Fedora core os configuration
-
-1. Create a fedora core os configuration file ending with `...fcc.yaml`. Minimal example:
-
-    ```yaml
-    variant: fcos
-    version: 1.0.0
-    passwd:
-      users:
-        - name: core
-          ssh_authorized_keys:
-            - ssh-rsa AAAAB3NzaC1...
-    ```
-
-    The ssh key is omitted on purpose. Replace `ssh-rsa AAAAB3NzaC1...` with the **complete** contents of the public key file `<public-key-file-name>.pub` generated in the previous chapter **Generate ssh keys**.
-
-### Generate fedora core os ignition file from config
-
-The ignition file generation can be easily done using [fcct](https://docs.fedoraproject.org/en-US/fedora-coreos/using-fcct/). I recommend the following procedure for obtaining fcct and using it (requires docker and/or podman, both cli commands can be used interchangeably):
-
-1. Obtain fcct according to above link. As of today:
-
-    ```bash
-    podman pull quay.io/coreos/fcct:release
-    ```
-
-2. Run fcct on configuration file according to above link. Powershell command is slightly different than bash. As of today for powershell:
-
-    ```powershell
-    Get-Content <example-fcc-path>.yaml | docker run -i --rm quay.io/coreos/fcct --pretty --strict > <transpiled-config-path>.ign
-    ```
-
 ## Prepare openstack to run fedora core os
 
 ### How to create the openstack fedora core os image
@@ -150,6 +111,45 @@ We want to enable pings and ssh traffic in the security group (possibly default)
 
     ```bash
     openstack server add floating ip <instance-name> <floating-ip>
+    ```
+
+## How to create the fedora core os ignition file
+
+### Generate ssh keys
+
+1. Generate ssh keys using `ssh-keygen`. This [link](https://www.ssh.com/ssh/keygen/) will help. The public key will be needed at a later point in this tutorial!
+2. It might be wise to pass ssh key management to `ssh-agent`. This [link](https://www.ssh.com/ssh/agent) will help. It is important that you remember the passwort for the private key!
+
+### Fedora core os configuration
+
+1. Create a fedora core os configuration file ending with `...fcc.yaml`. Minimal example:
+
+    ```yaml
+    variant: fcos
+    version: 1.0.0
+    passwd:
+      users:
+        - name: core
+          ssh_authorized_keys:
+            - ssh-rsa AAAAB3NzaC1...
+    ```
+
+    The ssh key is omitted on purpose. Replace `ssh-rsa AAAAB3NzaC1...` with the **complete** contents of the public key file `<public-key-file-name>.pub` generated in the previous chapter **Generate ssh keys**.
+
+### Generate fedora core os ignition file from config
+
+The ignition file generation can be easily done using [fcct](https://docs.fedoraproject.org/en-US/fedora-coreos/using-fcct/). I recommend the following procedure for obtaining fcct and using it (requires docker and/or podman, both cli commands can be used interchangeably):
+
+1. Obtain fcct according to above link. As of today:
+
+    ```bash
+    podman pull quay.io/coreos/fcct:release
+    ```
+
+2. Run fcct on configuration file according to above link. Powershell command is slightly different than bash. As of today for powershell:
+
+    ```powershell
+    Get-Content <example-fcc-path>.yaml | docker run -i --rm quay.io/coreos/fcct --pretty --strict > <transpiled-config-path>.ign
     ```
 
 ## Access fedora core os via ssh
