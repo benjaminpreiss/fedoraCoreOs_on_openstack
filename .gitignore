@@ -1,0 +1,4 @@
+*.key
+*.qcow2
+*.ign
+*.sh
