@@ -1,0 +1,26 @@
+variant: fcos
+version: 1.0.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCY2sHXjZoj71akWI9JzvlecJ3YWCzXMixHkdqOfy9b7Ke7NOwKETjbTw/XBIqe8knjXB09xjRQ4ee2GJxXY6GCJa8htytx5s3ojQ0LE78Ij2FO3SW0my7/zOHNuL/t81vWz5NFW0n+kLs4/qiQArVFgntT1k8EqAf0/26a4zN8m7z06bGAGXRRWMG7/sLvAnc9Qj1n6Kx1tGeNO0joRUmmutXwWiC/sT51g7QfOKeVfOigGCoH5/CYBHHdN+Vu6dV2vB8UgsUjN986VOShRRnh2Q01IEShhXCvutV+dtDpaI7Wa3B9AbtwPhhCeTKpwCy7gBQTXfmmAywEd3QXf97d Generated-by-Nova
+storage:
+  disks:
+    - device: /dev/disk/by-id/virtio-0f53abcf-95d7-4397-a
+      wipe_table: true
+      partitions:
+        # Since type_guid is not specified, it will be a Linux native
+        # partition.
+        # We assign a descriptive label to the partition. This is important
+        # for referring to it in a device-agnostic way in other parts of the
+        # configuration.
+        - label: fedora
+          start_mib: 0
+          size_mib: 0
+          number: 1
+          wipe_partition_entry: true
+  filesystems:
+    - path: /var/new_drive
+      device: /dev/disk/by-partlabel/fedora
+      format: ext4
